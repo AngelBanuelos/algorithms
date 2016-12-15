@@ -22,22 +22,19 @@ public class AddTwoNumbers {
 	}
 
 	ListNode list = null;
+	ListNode lastNode = null;
 
 	public void add(int value) {
 		if (list == null) {
 			list = new ListNode(value);
+			lastNode = list;
 			return;
 		}
 
-		ListNode l1 = list;
-		ListNode l2 = l1.next;
-		while (l2 != null) {
-			l1 = l2;
-			l2 = l1.next;
-
-		}
+		ListNode l2 = lastNode.next;
 		l2 = new ListNode(value);
-		l1.next = l2;
+		lastNode.next = l2;
+		lastNode = l2;
 
 	}
 
@@ -50,31 +47,73 @@ public class AddTwoNumbers {
 		System.out.print("\n");
 	}
 
-	public static void main(String[] args) {
-		AddTwoNumbers l1 = new AddTwoNumbers();
-		l1.add(8);
-		l1.add(9);
-		l1.add(5);
-
-//		l1.print();
-
-		AddTwoNumbers l2 = new AddTwoNumbers();
-		l2.add(2);
-		l2.add(0);
-		l2.add(4);
-//		l2.print();
-
-		AddTwoNumbers.addTwoNumbers(l1.list, l2.list);
-		System.out.println(5<<13%5);
-		for(int i = 1 ; i <= 5 ; i ++){
-			System.out.println((5 << i%5) );
+	public void print(ListNode listNode) {
+		ListNode l = listNode;
+		while (l != null) {
+			System.out.print(l.val + " ");
+			l = l.next;
 		}
-
+		System.out.print("\n");
 	}
 
-	public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+	public static void main(String[] args) {
+		AddTwoNumbers l1 = new AddTwoNumbers();
+		// 2 -> 4 -> 3
+		l1.add(2);
+		l1.add(4);
+		l1.add(3);
+
+		l1.print();
+
+		AddTwoNumbers l2 = new AddTwoNumbers();
+		// 5 -> 6 -> 4
+		l2.add(0);
+		l2.add(6);
+		l2.add(4);
+
+		l2.print();
+
+		l1.print( l1.addTwoNumbers2(l1.list, l2.list, null, null, 0) );
+
+	}
+	
+	public ListNode addTwoNumbers2(ListNode l1, ListNode l2, ListNode result, ListNode last, int carried) {
+
+		if (l1 == null && l2 == null) {
+			if (carried != 0) {
+				ListNode newNode = new ListNode(carried);
+				last.next = newNode;
+				last = newNode;
+			}
+			return result;
+		}
 		
-		return null;
+		int lVal = 0;
+		if (l1 != null) {
+			lVal = l1.val;
+		}
+		
+		int llVal = 0;
+		if (l2 != null) {
+			llVal = l2.val;
+		}
+
+		int sum = (llVal + lVal + carried);
+		carried = sum / 10;
+		int value = sum % 10;
+
+		ListNode newNode = new ListNode(value);
+
+		if (result == null) {
+			result = newNode;
+			last = result;
+		} else {
+			last.next = newNode;
+			last = newNode;
+		}
+
+		return addTwoNumbers2((l1 != null ? l1.next : null), (l2 != null ? l2.next : null), result, last, carried);
+
 	}
 
 }
