@@ -1,4 +1,4 @@
-package com.tuinsomniacorp.leetcode.hard;
+package com.tuinsomniacorp.leetcode.easy;
 
 import java.util.Stack;
 /**
