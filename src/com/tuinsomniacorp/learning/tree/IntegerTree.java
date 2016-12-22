@@ -39,4 +39,9 @@ public class IntegerTree implements Tree {
 		return value;
 	}
 	
+	@Override
+	public String toString() {
+		return getValue() + "";
+	}
+	
 }
